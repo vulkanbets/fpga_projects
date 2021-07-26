@@ -1,0 +1,5 @@
+iverilog -o hello_tb.vvp hello_tb.v
+
+vvp hello_tb.vvp
+
+
