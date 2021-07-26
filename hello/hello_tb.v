@@ -27,6 +27,4 @@ module hello_tb;
 
     end
 
-
-
 endmodule

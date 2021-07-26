@@ -3,7 +3,7 @@
 module hello
 (
     input A,
-    output wire B
+    output B
 );
 
     assign B = A;
