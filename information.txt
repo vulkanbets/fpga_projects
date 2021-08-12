@@ -1,0 +1,9 @@
+
+<-------------------------------Start Vivado Software------------------------------>
+source /tools/Xilinx/Vivado/2021.1/settings64.sh
+then
+vivado &
+<-------------------------Add a user to the Dialout Group----------------------->
+sudo adduser $USER dialout
+<-------------------------Add a user to the Dialout Group----------------------->
+<-------------------------------Start Vivado Software------------------------------>
