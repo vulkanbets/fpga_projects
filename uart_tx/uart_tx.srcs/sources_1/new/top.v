@@ -1,23 +1,35 @@
 `timescale 1ns / 1ps
 
-
 module top #
-// Parameters
+// --Parameters
 (
     parameter
-    romAddWidth = 4,
+    romAddrWidth = 4,
     romDataWidth = 8
 )
-// Inputs and Outputs
+// --Inputs and Outputs
 (
     input clk,
     output out
 );
     
+    wire [romDataWidth - 1 : 0] rom_out;            // 
+    reg [romAddrWidth - 1 : 0] rom_addr_in = 0;     // rom address coming in
+    
+    always @ (posedge clk)
+    begin
+        if(rom_addr_in < 13)
+            rom_addr_in <= rom_addr_in + 1;
+        else
+            rom_addr_in <= 0;
+    end
     
     
-    rom # ( .romAddWidth(romAddWidth), .romDataWidth(romDataWidth) )
-        rom_uart( .clk(clk), .addr(), .data() );
+    rom # ( .romAddrWidth(romAddrWidth), .romDataWidth(romDataWidth) )
+        rom_uart( .clk(clk), .addr(rom_addr_in), .data(rom_out) );
+    
+    
+    
     
     
 endmodule
