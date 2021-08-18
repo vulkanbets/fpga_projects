@@ -1,3 +1,13 @@
+iverilog -o hello_tb.vvp hello_tb.v
+
+vvp hello_tb.vvp
+
+
+
+iverilog -o barrel_tb.vvp barrel_tb.v
+
+vvp barrel_tb.vvp
+
 
 <-------------------------------Start Vivado Software------------------------------>
 source /tools/Xilinx/Vivado/2021.1/settings64.sh
@@ -7,3 +17,4 @@ vivado &
 sudo adduser $USER dialout
 <-------------------------Add a user to the Dialout Group----------------------->
 <-------------------------------Start Vivado Software------------------------------>
+

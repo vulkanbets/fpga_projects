@@ -1,17 +1,20 @@
 `timescale 1ns / 1ps
 
-module uart_tx_tb;
+
+module uart_tx_tb # (parameter romAddWidth = 4, romDataWidth = 8);
     
     // Inputs
-    reg clk;             // Internal Clock Oscillator
+    reg clk;                                            // Internal Clock Oscillator
     
     // Outputs
-    wire  baud_clk = uut.baud_clk;      // Symbol Rate
+    wire  out = uut.out;                                // Output data
+    wire [romDataWidth - 1 : 0] current_mem_selected;
     
     // Unit under test (UUT)
     top uut
     (
-        .clk(clk)
+        .clk(clk),
+        .out(out)
     );
     
     
