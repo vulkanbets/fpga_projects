@@ -18,7 +18,7 @@ module uart_tx_tb;
     
     
     // Clock generation
-    always #0.005 clk <= ~clk;
+    always #0.5 clk <= ~clk;
     
     initial clk <= 0;
     
