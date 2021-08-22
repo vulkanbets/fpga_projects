@@ -1,24 +1,24 @@
 `timescale 1ns / 1ps
 
-module uart_tx_tb # (parameter romAddrWidth = 4, romDataWidth = 8);
+module uart_tx_tb;
     
     // Inputs
-    reg clk;                                                                // Internal Clock Oscillator
+    reg clk;            // Internal Clock Oscillator
     
     // Outputs
-    wire [romAddrWidth - 1 : 0] current_mem_selected = uut.rom_addr_in;     // Current Memory selected
-    wire [romDataWidth - 1 : 0] current_data_selected = uut.rom_out;        // Current data selected
+    wire tx;            // Serial output of Tx Uart Line
+    
     
     // Unit under test (UUT)
     top uut
     (
         .clk(clk),
-        .out()
+        .tx(tx)
     );
     
     
     // Clock generation
-    always #17 clk <= ~clk;
+    always #0.005 clk <= ~clk;
     
     initial clk <= 0;
     

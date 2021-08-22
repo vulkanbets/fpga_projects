@@ -4,14 +4,14 @@ module rom #
 // Parameters
 (
     parameter
-    romAddrWidth = 4,
-    romDataWidth = 8
+    ROM_ADDR_WIDTH = 4,
+    ROM_DATA_WIDTH = 8
 )
 // Inputs and Outputs
 (
     input clk,
-    input [romAddrWidth - 1 : 0] addr,
-    output reg [romDataWidth - 1 : 0] data
+    input [ROM_ADDR_WIDTH - 1 : 0] addr,
+    output reg [ROM_DATA_WIDTH - 1 : 0] data
 );
     
     always @ (*)
