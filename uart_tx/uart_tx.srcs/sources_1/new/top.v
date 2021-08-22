@@ -34,6 +34,8 @@ module top #
     rom_uart( .clk(clk), .addr(rom_addr_in), .data(rom_out) );
     
     
+        
+    
     
     // Transmitter Logic
     always @ ( posedge clk )
