@@ -15,6 +15,8 @@ module top #
     output tx
 );
     
+    // Logic to calculate Fibonacci Sequence
+    // Logic to calculate Fibonacci Sequence
     reg [WORDLENGTH - 1 : 0] index = 0;     // Initialize Index to 0
     reg [WORDLENGTH - 1 : 0] i_end = N;     // Ending index of sequence
     
@@ -48,16 +50,18 @@ module top #
             fn <= fn_0 + fn_1;
         end
     end
+    // <----END---->
+    // <----END---->
     
     
     
     // Nets used for instantiated modules
-    wire empty;
-    wire full;
+    wire empty; //<--- Is it empty?
+    wire full;  //<--- Is it full?
     
     reg read = 0;
     reg write = 0;
-    reg [WORDLENGTH - 1 : 0] datain;
+    wire [WORDLENGTH - 1 : 0] datain = fn;
     wire [WORDLENGTH - 1 : 0] dataout;
     
     // Instantiate FIFO Module
@@ -66,7 +70,12 @@ module top #
         myfifo( .clk(clk), .read(read), .write(write), .datain(datain), .empty(empty), .full(full), .dataout(dataout) );
     
     
-    
+    // Combinational Logic for storing data into the FIFO
+    always @ (*)
+    begin
+        if( !full ) write <= 1;
+        else write <= 0;
+    end
     
     
     

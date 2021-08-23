@@ -13,7 +13,7 @@ module uarttx #
     CLKS_PER_BIT = 868 - 1,                         // 
     BAUD_COUNTER_SIZE = $clog2(CLKS_PER_BIT),       // 
     DATA_WIDTH = 8,                                 // 
-    DATA_COUNTER_SIZE = $clog2(DATA_WIDTH + 2)  // <--  This accounts for the start-bit and the stop-bit
+    DATA_COUNTER_SIZE = $clog2(DATA_WIDTH + 2)      // <--  This accounts for the start-bit and the stop-bit
 )
 // --Inputs and Outputs
 (

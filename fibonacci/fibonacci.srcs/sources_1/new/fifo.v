@@ -35,7 +35,7 @@ module fifo #
     
     
     
-    always @ (posedge clk)
+    always @ ( posedge clk )
     begin
         if( read == 1'b1 && count != 0 )
         begin
