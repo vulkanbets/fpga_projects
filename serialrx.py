@@ -9,5 +9,4 @@ ser = serial.Serial('/dev/ttyUSB1', baudrate=115200, bytesize=EIGHTBITS, stopbit
 while(1):
     data = ser.readline()#.decode('ascii')
     print(data)
-    time.sleep(0.8)
 
