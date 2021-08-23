@@ -18,7 +18,7 @@ module fibonacci_testbench;
     
     
     // Clock generation
-    always #20 clk <= ~clk;
+    always #9.7 clk <= ~clk;
     
     initial clk <= 0;
     

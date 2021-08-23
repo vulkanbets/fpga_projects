@@ -4,8 +4,10 @@ module top #
 // --Parameters
 (
     parameter
-    WORDLENGTH = 64,    // <-- 64-bit data type
-    N = 40              // <-- Number of iterations to calculate
+    N = 40,                         //<-- Number of iterations to calculate
+    WORDLENGTH = 64,                //<-- These values are for the FIFO
+    MEMDEPTH = 32,                  //<-- These values are for the FIFO
+    MEMDEPTHBITS = $clog2(MEMDEPTH) //<-- These values are for the FIFO
 )
 // --Inputs and Outputs
 (
@@ -26,10 +28,10 @@ module top #
     reg [WORDLENGTH - 1 : 0] fn;            //<-- This represents f(n)
     
     
-    always @ (posedge clk)
+    always @ ( posedge clk )
     begin
-        if(index < N) begin index <= index + 1; end
-        if(index > 1 && index < N)
+        if( index < N ) begin index <= index + 1; end
+        if( index > 1 && index < N )
         begin
             fn_0 <= fn_1;
             fn_1 <= fn;
@@ -39,9 +41,9 @@ module top #
     
     always @ (*)
     begin
-        if(index == 0) begin fn <= fn_0; end
-        else if(index == 1) begin fn <= fn_1; end
-        else if(index < N)
+        if( index == 0 ) begin fn <= fn_0; end
+        else if( index == 1 ) begin fn <= fn_1; end
+        else if( index < N )
         begin
             fn <= fn_0 + fn_1;
         end
@@ -49,9 +51,19 @@ module top #
     
     
     
+    // Nets used for instantiated modules
+    wire empty;
+    wire full;
     
+    reg read = 0;
+    reg write = 0;
+    reg [WORDLENGTH - 1 : 0] datain;
+    wire [WORDLENGTH - 1 : 0] dataout;
     
+    // Instantiate FIFO Module
+    fifo # ( .WORDLENGTH(64), .MEMDEPTH(MEMDEPTH), .MEMDEPTHBITS(MEMDEPTHBITS) )
     
+        myfifo( .clk(clk), .read(read), .write(write), .datain(datain), .empty(empty), .full(full), .dataout(dataout) );
     
     
     

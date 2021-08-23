@@ -1,12 +1,11 @@
 `timescale 1ns / 1ps
 
-
 module fifo #
 // --Parameters
 (
     parameter
-    WORDLENGTH = 8,
-    MEMDEPTH = 8,   //<-- Ensure this is a power of 2 for proper usage
+    WORDLENGTH = 64,
+    MEMDEPTH = 32,  //<-- Ensure this is a power of 2 for proper usage
     MEMDEPTHBITS = $clog2(MEMDEPTH)
 )
 // --Inputs and Outputs
@@ -38,8 +37,6 @@ module fifo #
     
     always @ (posedge clk)
     begin
-        
-        
         if( read == 1'b1 && count != 0 )
         begin
             dataout = fifo_mem[readcounter];
@@ -67,7 +64,5 @@ module fifo #
         else if( writecounter > readcounter )
             count = writecounter - readcounter;
         else;
-        
-        
     end
 endmodule
