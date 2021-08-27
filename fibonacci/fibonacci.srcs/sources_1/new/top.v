@@ -55,26 +55,35 @@ module top #
     
     
     
-    // Nets used for instantiated modules
-    wire empty; //<--- Is it empty?
-    wire full;  //<--- Is it full?
+    // Wires / Nets used for instantiated modules
+    wire is_empty; //<--- Is it empty?
+    wire is_full;  //<--- Is it full?
     
-    reg read = 0;
-    reg write = 0;
+    reg read_enable = 0;
+    reg write_enable = 0;
     wire [WORDLENGTH - 1 : 0] datain = fn;
     wire [WORDLENGTH - 1 : 0] dataout;
     
     // Instantiate FIFO Module
     fifo # ( .WORDLENGTH(64), .MEMDEPTH(MEMDEPTH), .MEMDEPTHBITS(MEMDEPTHBITS) )
     
-        myfifo( .clk(clk), .read(read), .write(write), .datain(datain), .empty(empty), .full(full), .dataout(dataout) );
+    myfifo                          // <--- Structural Modeling
+    (
+        .clk(clk),
+        .read_enable(read_enable),
+        .write_enable(write_enable),
+        .datain(datain),
+        .is_empty(is_empty),
+        .is_full(is_full),
+        .dataout(dataout)
+    );
     
     
     // Combinational Logic for storing data into the FIFO
     always @ (*)
     begin
-        if( !full ) write <= 1;
-        else write <= 0;
+        if( !is_full ) write_enable <= 1;
+        else write_enable <= 0;
     end
     
     
