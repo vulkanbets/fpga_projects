@@ -8,6 +8,7 @@ module spi_testbench;
     reg ads7038_cs;
     reg ads7038_sclk;
     reg ads7038_sdo = 0;
+    reg alternating_bit = 0;
     
     // Outputs
     wire ads7038_sdi;
@@ -46,10 +47,15 @@ module spi_testbench;
                 #(i) ads7038_cs <= ~ads7038_cs;
                 #(i+60) ads7038_cs <= ~ads7038_cs;
             end
+            alternating_bit <= ~alternating_bit;
         end
     end
     
-    
+    always @ ( negedge ads7038_sclk )
+    begin
+        if( top.spi_in.config_reg >= 2 && !alternating_bit ) ads7038_sdo <= ~ads7038_sdo;
+        else ads7038_sdo <= 1;
+    end
     
     initial
     begin

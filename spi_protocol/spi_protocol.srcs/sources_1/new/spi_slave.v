@@ -21,7 +21,9 @@ module spi_slave
     // Serial Data Out Variables
     reg [11 : 0] memory [0 : 1];
     
-
+    // Initialize Memory
+    integer i;
+    initial for( i = 0; i < 2; i = i + 1 ) memory[i] = 0;
     
     // Serial Data Logic
     //////////////////////////////////////////////////////////////
@@ -45,7 +47,7 @@ module spi_slave
             if( config_reg < 2 ) config_reg <= config_reg + 1;
         end
         
-        
+        if( config_reg >= 2 ) memory[0][11] <= ads7038_sdo;
         
     end
     //////////////////////////////////////////////////////////////
@@ -58,6 +60,11 @@ module spi_slave
         if( config_reg < 2 ) data_frame = data_frame >> 1;
         else data_frame <= 0;
         
+        if( config_reg >= 2 && frame_counter == 0 )
+        begin
+            memory[1] <= memory[0];
+        end
+        else memory[0] <= memory[0] >> 1;
         
     end
     //////////////////////////////////////////////////////////////
