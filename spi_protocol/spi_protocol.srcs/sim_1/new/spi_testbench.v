@@ -7,11 +7,12 @@ module spi_testbench;
     reg clk;
     reg ads7038_cs;
     reg ads7038_sclk;
-    reg ads7038_sdo = 0;
+    reg ads7038_sdo = 1;
     reg alternating_bit = 0;
     
     // Outputs
     wire ads7038_sdi;
+    wire transmit_ready;
     
     
     // Unit under test (UUT)
@@ -21,7 +22,8 @@ module spi_testbench;
         .ads7038_cs(ads7038_cs),
         .ads7038_sclk(ads7038_sclk),
         .ads7038_sdo(ads7038_sdo),
-        .ads7038_sdi(ads7038_sdi)
+        .ads7038_sdi(ads7038_sdi),
+        .transmit_ready(transmit_ready)
     );
     
     

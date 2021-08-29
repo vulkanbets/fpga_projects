@@ -3,11 +3,12 @@
 
 module spi_slave
 (
-    input clk,              // Internal FPGA clock
-    input ads7038_cs,       // Chip Select from ADC
-    input ads7038_sclk,     // serial clock coming from ADC
-    input ads7038_sdo,      // ADC Serial Data out
-    output reg ads7038_sdi  // ADC Serial Data in
+    input clk,                  // Internal FPGA clock
+    input ads7038_cs,           // Chip Select from ADC
+    input ads7038_sclk,         // serial clock coming from ADC
+    input ads7038_sdo,          // ADC Serial Data out
+    output reg ads7038_sdi,     // ADC Serial Data in
+    output reg transmit_ready   // transmit ready signal
 );
     
     // Serial Data In Variables
@@ -17,6 +18,9 @@ module spi_slave
     
     // Initialize Serial Data In (SDI)
     initial ads7038_sdi <= 0;
+    
+    // Initialize Transmit Ready Signal
+    initial transmit_ready <= 1;
     
     // Serial Data Out Variables
     reg [11 : 0] memory [0 : 1];
@@ -63,11 +67,12 @@ module spi_slave
         if( config_reg >= 2 && frame_counter == 0 )
         begin
             memory[1] <= memory[0];
+            transmit_ready <= 1;
         end
         else memory[0] <= memory[0] >> 1;
-        
     end
     //////////////////////////////////////////////////////////////
+    
     
     
     
