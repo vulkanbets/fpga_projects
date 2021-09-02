@@ -7,7 +7,9 @@ module spi_slave
     input ads7038_cs,           // Chip Select from ADC
     input ads7038_sclk,         // serial clock coming from ADC
     input ads7038_sdo,          // ADC Serial Data out
+    input transmit_done,        // 
     output reg ads7038_sdi,     // ADC Serial Data in
+    output [11 : 0] mem_out,    // 
     output reg transmit_ready   // transmit ready signal
 );
     
@@ -20,7 +22,7 @@ module spi_slave
     initial ads7038_sdi <= 0;
     
     // Initialize Transmit Ready Signal
-    initial transmit_ready <= 1;
+    initial transmit_ready <= 0;
     
     // Serial Data Out Variables
     reg [11 : 0] memory [0 : 1];
@@ -28,6 +30,11 @@ module spi_slave
     // Initialize Memory
     integer i;
     initial for( i = 0; i < 2; i = i + 1 ) memory[i] = 0;
+    
+    // Memory Data Bus
+    assign mem_out = memory[1];
+    
+    
     
     // Serial Data Logic
     //////////////////////////////////////////////////////////////
@@ -67,12 +74,19 @@ module spi_slave
         if( config_reg >= 2 && frame_counter == 0 )
         begin
             memory[1] <= memory[0];
-            transmit_ready <= 1;
         end
         else memory[0] <= memory[0] >> 1;
     end
     //////////////////////////////////////////////////////////////
     
+    
+    
+    //////////////////////////////////////////////////////////////
+    always @ ( memory[1] )
+    begin
+        if(config_reg >= 2) transmit_ready <= ~transmit_ready;
+    end
+    //////////////////////////////////////////////////////////////
     
     
     

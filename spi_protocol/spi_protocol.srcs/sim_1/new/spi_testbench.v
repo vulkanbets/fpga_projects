@@ -14,16 +14,28 @@ module spi_testbench;
     wire ads7038_sdi;
     wire transmit_ready;
     
+    wire dac7750_sclk;
+    wire dac7750_latch;
+    wire dac7750_din;
+    
+    wire [11 : 0] mem_bus = uut.memory;
+    
     
     // Unit under test (UUT)
     top uut
     (
+        // I/O for the ADC
         .clk(clk),
         .ads7038_cs(ads7038_cs),
         .ads7038_sclk(ads7038_sclk),
         .ads7038_sdo(ads7038_sdo),
         .ads7038_sdi(ads7038_sdi),
-        .transmit_ready(transmit_ready)
+        .transmit_ready(transmit_ready),
+        
+        // I/O for the DAC
+        .dac7750_sclk(dac7750_sclk),
+        .dac7750_latch(dac7750_latch),
+        .dac7750_din(dac7750_din)
     );
     
     
